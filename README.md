@@ -1,4 +1,4 @@
-# MERNTImerForm
+# MERNTImerForm App
 This is an simple React Form with 5 minutes countdown timer, the app features beautiful interface, by using Boostrap CSS classes for quick development, react toasts for errors and messages with basic frontend validation.
 
 #Backend is also implimented with NodeJs(Express) to collect the form data and store in MongoDB. 
