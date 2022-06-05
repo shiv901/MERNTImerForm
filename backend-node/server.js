@@ -26,7 +26,8 @@ const userSchema = mongoose.Schema({
   email: String,
   address: String,
   ccode: String,
-  phone: String
+  phone: String,
+  captcha: String
 }, {
   timestamps: true
 })
@@ -38,8 +39,8 @@ app.get('/', (req, res) => {
 })
 app.post('/store-data', async (req, res) => {
   // console.log('In server.js Response: ' + JSON.stringify(req.body))
-  const { name, email, address, ccode, phone } = req.body
-  const user = await User.create({name, email, address, ccode, phone})
+  const { name, email, address, ccode, phone, captcha } = req.body
+  const user = await User.create({name, email, address, ccode, phone, captcha})
   
   if(user) {
     res.status(201).json({
@@ -48,7 +49,8 @@ app.post('/store-data', async (req, res) => {
       email: user.email,
       address: user.address,
       ccode: user.ccode,
-      phone: user.phone
+      phone: user.phone,
+      captcha: user.captcha
     })
   } else{
     res.status(400)
