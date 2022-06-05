@@ -1,25 +1,26 @@
 import { useState } from "react";
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { useEffect } from "react";
+
 
 const Form = () => {
-  // function signupUser() {
-  //   return new Promise(resolve => {
-  //     // code to be sent to backend from here
 
-  //     return true
-  //   });
-  // }
-  
+  useEffect(()=>{
+    loadCaptchaEnginge(6);
+  },[])
+
   const initialState = {
     name: "",
     email: "",
     dob: "",
     address: "",
     ccode: "+91",
-    phone:""
+    phone: "",
+    captcha:""
   };
 
-  const [{ name, email, dob, address, ccode, phone }, setState ] = useState(initialState);
+  const [{ name, email, dob, address, ccode, phone, captcha }, setState] = useState(initialState);
 
   // Resetting the form
   const clearState = () => {
@@ -36,29 +37,31 @@ const Form = () => {
   const handleSubmit = e => {
     // preventing Form from submitting
     e.preventDefault();
-    const userData = { name, email, dob, address, ccode, phone }
+    const userData = { name, email, dob, address, ccode, phone, captcha }
 
     // Basic Frontend Validations
-    if(!name || !dob || !address || !email || !ccode || !phone){
+    if (!name || !dob || !address || !email || !ccode || !phone || !captcha) {
       toast.error('All fields are mandatory!')
-    } else if(isNaN(phone) || phone.length !== 10){
+    } else if (isNaN(phone) || phone.length !== 10) {
       toast.error('Invalid phone number')
-    } else{
-
+    } else if (validateCaptcha(captcha) !== true) {
+      loadCaptchaEnginge(6);
+      toast.error('Invalid Captcha!')
+    } else {
       fetch('http://www.localhost:5000/store-data', {
         method: 'POST',
-        headers:{
+        headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(userData)
       })
-        .then(res=>{
-          clearState()
+        .then(res => {
           toast('Form Submitted')
+          setState({ ...initialState });
           return res.json()
         })
-        .catch(err=>console.log({err}))
-      
+        .catch(err => console.log({ err }))
+
     }
   };
 
@@ -91,10 +94,15 @@ const Form = () => {
           </div>
         </div>
       </div>
+      <div className="captcha-div text-center mt-3">
+        <LoadCanvasTemplate />
+        <input type="text" id="captcha" className="form-control"  name="captcha" value={captcha} onChange={onChange} placeholder="Enter above Captcha" />
+      </div>
+
 
       <div className="form-group mt-3 d-flex justify-content-center gap-3 mt-4">
-          <button type="submit" className="btn btn-primary">Sign in</button>
-          <button type="reset" className="btn btn-warning" onClick={clearState}>Reset</button>
+        <button type="submit" className="btn btn-primary">Sign in</button>
+        <button type="reset" className="btn btn-warning" onClick={clearState}>Reset</button>
       </div>
     </form>
   );

@@ -25,3 +25,19 @@ body{
   margin-top: 2rem;
   box-shadow: 10px 25px 30px #000;
 }
+
+#form .captcha-div > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-block: 1rem;
+}
+
+#reload_href{
+  color: #fff !important;
+}
+
+#canv{
+  width: 100%;
+}
