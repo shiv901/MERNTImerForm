@@ -6,5 +6,5 @@ This is an simple React Form with 5 minutes countdown timer, the app features be
 ## Run the development environment:
 1. Clone the git repository locally with ```git clone "https://github.com/shiv901/MERNTImerForm.git"```. 
 2. Run ```npm install``` in both base(backend) folder and in Frontend folder.
-3. Run ```npm run client``` for running local frontend server, and ```npm run server``` for running the server.
+3. Run ```npm run client``` for running local frontend server, and ```npm run server``` for running the backend server.
 4. Run ```npm run dev``` for running for both server concurrently. 
