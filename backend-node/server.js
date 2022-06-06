@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }))
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect('mongodb+srv://mongodb:abc1234@cluster0.nymje.mongodb.net/timerForm?retryWrites=true&w=majority')
+    const conn = await mongoose.connect(MONGODB_URI)
     console.log(`MongoDB connected: ${conn.connection.host}`)
   } catch (err) {
     console.log(err)
